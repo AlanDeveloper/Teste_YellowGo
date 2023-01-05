@@ -1,0 +1,27 @@
+form#formCreateOrUpdate {
+    padding: 20px;
+    box-shadow: rgb(149 157 165 / 20%) 0 8px 24px;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+form#formCreateOrUpdate h1 {
+    margin-bottom: 20px;
+}
+
+form#formCreateOrUpdate > div {
+    margin-bottom: 10px;
+}
+
+form#formCreateOrUpdate input, select, textarea {
+    width: 100%;
+    padding: 5px;
+}
+
+form#formCreateOrUpdate input[type="submit"] {
+    padding: 5px 20px;
+    background-color: #1b1717;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}

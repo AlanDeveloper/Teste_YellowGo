@@ -1,0 +1,65 @@
+main section {
+    background: #1B1717;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 225px;
+    height: 100%;
+    padding: 20px 0;
+    transition: all 0.5s ease;
+    grid-area: menu;
+    overflow: hidden;
+    z-index: 100;
+}
+
+main section ul li a {
+    text-decoration: none;
+    display: block;
+    padding: 13px 30px;
+    border-bottom: 1px solid #000;
+    color: rgb(241, 237, 237);
+    font-size: 16px;
+    position: relative;
+}
+
+main section ul li a .icon {
+    filter: invert(1);
+}
+
+main section ul li a:hover,
+main section ul li a.active {
+    color: #000;
+    background: white;
+    border-right: 2px solid #1B1717;
+}
+
+main section ul li a:hover .icon,
+main section ul li a.active .icon {
+    color: #000;
+    filter: invert(0);
+}
+
+main section ul li a:hover:before,
+main section ul li a.active:before {
+    display: block;
+}
+
+/* ICONS */
+.tes {
+    background-repeat: no-repeat;
+    background-size: 100%;
+    margin-right: 10px;
+    padding: 0px 10px;
+}
+
+.te-company {
+    background-image: url('../images/company.svg');
+}
+
+.te-employee {
+    background-image: url('../images/employee.svg');
+}
+
+.te-dashboard {
+    background-image: url('../images/dashboard.svg');
+}
