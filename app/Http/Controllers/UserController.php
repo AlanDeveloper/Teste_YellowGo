@@ -35,7 +35,8 @@ class UserController extends Controller
         return redirect()->back()
             ->with('header', 'Error')
             ->with('message', 'The provided credentials do not match our records')
-            ->with('status', 'error');
+            ->with('status', 'error')
+            ->withInput();
     }
 
     public function register()
@@ -47,19 +48,24 @@ class UserController extends Controller
     {
         try {
             $user = new User();
-            $user->password = Hash::make($request->password);
+            $user->senha = Hash::make($request->senha);
             $user->email = $request->email;
-            $user->name = $request->name;
+            $user->nome = $request->nome;
+            $user->status = $request->status;
+            $user->tipo_de_usuario = $request->tipo_de_usuario;
             $user->save();
             $request->session()->regenerate();
         } catch (\Exception $e) {
-            User::createLog('user', $e->getMessage(), 'POST', 'error');
             return redirect()->back()
                 ->with('header', 'Error')
-                ->with('message', 'Failed deleted with message "' . $e->getMessage() . '"')
-                ->with('status', 'error');
+                ->with('message', 'Failed created with message "' . $e->getMessage() . '"')
+                ->with('status', 'error')
+                ->withInput();
         }
-        return redirect()->route('dashboard.index');
+        return redirect()->back()
+            ->with('header', 'Success')
+            ->with('message', 'Successfully created')
+            ->with('status', 'success');
     }
 
     public function logout(Request $request)

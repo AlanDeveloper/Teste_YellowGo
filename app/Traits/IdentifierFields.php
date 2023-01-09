@@ -12,7 +12,7 @@ trait IdentifierFields
         static::creating(function ($model) {
             if (auth()->user()) {
 
-                $id = auth()->user()->pessoa()->id;
+                $id = auth()->user()->id;
 
                 if (!$model->isDirty('created_by')) {
                     $model->created_by = $id;
@@ -30,7 +30,7 @@ trait IdentifierFields
         static::updating(function ($model) {
             if(auth()->user()) {
 
-                $id = auth()->user()->pessoa()->id;
+                $id = auth()->user()->id;
 
                 if (!$model->isDirty('updated_by')) {
                     $model->updated_by = $id;
