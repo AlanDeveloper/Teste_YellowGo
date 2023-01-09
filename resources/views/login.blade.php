@@ -8,10 +8,9 @@
         <input type="email" name="email" id="email">
     </div>
     <div>
-        <label for="password">Senha</label>
-        <input type="password" name="password" id="password">
+        <label for="senha">Senha</label>
+        <input type="senha" name="senha" id="senha">
     </div>
     <input type="submit" value="Enviar">
 </form>
-<a href="{{ route('register') }}">Não possuí uma conta? Registre-se</a>
 @endsection
