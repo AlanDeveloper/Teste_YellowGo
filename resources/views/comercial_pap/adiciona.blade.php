@@ -46,6 +46,10 @@
         <input type="text" id="nome" name="nome" maxlength="255" value="{{ old('nome') }}">
     </div>
     <div>
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" maxlength="255" value="{{ old('email') }}">
+    </div>
+    <div>
         <label for="telefone">Telefone(sem caracteres especiais):</label>
         <input type="text" id="telefone" name="telefone" class="mascTelefone" maxlength="11" value="{{ old('telefone') }}" required>
     </div>

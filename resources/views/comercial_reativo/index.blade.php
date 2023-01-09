@@ -43,15 +43,17 @@
                 }
                 $total++;
             }
+
+            $status = number_format (($count - 5) / ($total - 5) * 100, 0);
         @endphp
         <tr>
             <td>{{ $c->nome }}</td>
-            <td>{{ number_format ($count / $total * 100, 0) }}%</td>
+            <td>{{ $status >= 75 ? 'Quente' : ($status < 75 && $status >= 40 ? 'Morno' : 'Frio') }} ({{ $status }}%)</td>
             <td>{{ isset($c->responsavel) ? $c->responsavel : '-'}}</td>
             <td>
-                <form action="{{ route('comercial_passivo.pegar_cliente', $c->id) }}">
+                <form action="{{ route('comercial_reativo.pegar_cliente', $c->id) }}">
                     @csrf
-                    <input type="submit" value="Pegar" @if (isset($c->responsavel_id) || $c->status != 4) disabled @endif>
+                    <input type="submit" value="Pegar" @if (isset($c->responsavel_id) || $c->status != 3) disabled @endif>
                 </form>
             </td>
         </tr>

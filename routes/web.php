@@ -6,6 +6,7 @@ use App\Http\Controllers\ComercialPassivoController;
 use App\Http\Controllers\ComercialReativoController;
 use App\Http\Controllers\ComoSoubeController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MarketingController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
@@ -71,6 +72,13 @@ Route::middleware('auth')->group(function () {
 
     # MÓDULO COMO SOUBE
     Route::get('/comercial_reativo', [ComercialReativoController::class, 'index'])->name('comercial_reativo.index');
+
+    Route::get('/comercial_reativo/{id}/pegar_cliente', [ComercialPassivoController::class, 'pegar_cliente'])->name('comercial_reativo.pegar_cliente');
+    Route::post('/comercial_reativo/{id}/atualizar_cliente', [ComercialPassivoController::class, 'atualizar_cliente'])->name('comercial_reativo.atualizar_cliente');
+
+    # MÓDULO COMO SOUBE
+    Route::get('/marketing', [MarketingController::class, 'index'])->name('marketing.index');
+    Route::post('/marketing', [MarketingController::class, 'enviar_emails'])->name('marketing.enviar_emails');
 
     Route::get('/register', [UsuarioController::class, 'register'])->name('register');
     Route::post('/register', [UsuarioController::class, 'authenticate2']);
