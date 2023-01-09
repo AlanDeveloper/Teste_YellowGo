@@ -1,6 +1,9 @@
 <?php
 
-use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\ComercialAtivoController;
+use App\Http\Controllers\ComercialPAPController;
+use App\Http\Controllers\ComercialPassivoController;
+use App\Http\Controllers\ComercialReativoController;
 use App\Http\Controllers\ComoSoubeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UsuarioController;
@@ -49,8 +52,25 @@ Route::middleware('auth')->group(function () {
     Route::delete('/como_soube/{id}', [ComoSoubeController::class, 'deleta'])->name('como_soube.deleta');
 
     ## MÓDULO COMO SOUBE
-    Route::get('/cliente/adiciona', [ClienteController::class, 'adiciona'])->name('cliente.adiciona');
-    Route::post('/cliente/adiciona', [ClienteController::class, 'salva']);
+    Route::get('/cliente/adiciona', [ComercialAtivoController::class, 'adiciona'])->name('cliente.adiciona');
+    Route::post('/cliente/adiciona', [ComercialAtivoController::class, 'salva']);
+
+    Route::post('/comercial_ativo/{id}/atualizar_cliente', [ComercialAtivoController::class, 'atualizar_cliente'])->name('comercial_ativo.atualizar_cliente');
+
+    ## MÓDULO COMO SOUBE
+    Route::get('/comercial_passivo', [ComercialPassivoController::class, 'index'])->name('comercial_passivo.index');
+
+    Route::get('/comercial_passivo/{id}/pegar_cliente', [ComercialPassivoController::class, 'pegar_cliente'])->name('comercial_passivo.pegar_cliente');
+    Route::post('/comercial_passivo/{id}/atualizar_cliente', [ComercialPassivoController::class, 'atualizar_cliente'])->name('comercial_passivo.atualizar_cliente');
+
+    # MÓDULO COMO SOUBE
+    Route::get('/comercial_pap/adiciona', [ComercialPAPController::class, 'adiciona'])->name('comercial_pap.adiciona');
+    Route::post('/comercial_pap/adiciona', [ComercialPAPController::class, 'salva']);
+
+    Route::post('/comercial_pap/{id}/atualizar_cliente', [ComercialPAPController::class, 'atualizar_cliente'])->name('comercial_pap.atualizar_cliente');
+
+    # MÓDULO COMO SOUBE
+    Route::get('/comercial_reativo', [ComercialReativoController::class, 'index'])->name('comercial_reativo.index');
 
     Route::get('/register', [UsuarioController::class, 'register'])->name('register');
     Route::post('/register', [UsuarioController::class, 'authenticate2']);

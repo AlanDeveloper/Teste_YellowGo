@@ -28,6 +28,10 @@ class Cliente extends Model
         'bairro',
         'cidade',
         'viabilidade',
-        'observacao'
+        'observacao',
+        'status',
+        'responsavel_id',
+        'latitude',
+        'longitude'
     ];
 }

@@ -18,6 +18,13 @@ form#formCreateOrUpdate input, select, textarea {
     padding: 5px;
 }
 
+form#formCreateOrUpdate input:read-only, textarea:read-only,
+form#formCreateOrUpdate input:disabled, select:disabled, textarea:disabled {
+    cursor: default;
+    background-color: #dddddddd;
+    border: 1px solid #959595;
+}
+
 form#formCreateOrUpdate input[type="submit"] {
     padding: 5px 20px;
     background-color: #1b1717;

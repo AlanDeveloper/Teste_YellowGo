@@ -10,7 +10,7 @@ body {
     grid-template-areas:
         "header menu"
         "body menu";
-    grid-template-columns: 1fr 225px;
+    grid-template-columns: 1fr 250px;
     grid-template-rows: 1fr;
     background-color: #f5f5f5;
 }

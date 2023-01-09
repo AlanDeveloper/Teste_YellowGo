@@ -17,10 +17,10 @@ class CreateClientesTable extends Migration
             $table->id();
             $table->uuid('uuid');
 
-            $table->string('telefone');
+            $table->string('telefone', 15);
             $table->string('nome', 255)->nullable();
             $table->unsignedBigInteger('como_soube_id')->nullable();
-            $table->string('cpf', 14)->nullable();
+            $table->string('cpf', 11)->nullable();
             $table->string('cep', 9)->nullable();
             $table->string('rua', 255)->nullable();
             $table->integer('numero')->nullable();
@@ -30,9 +30,16 @@ class CreateClientesTable extends Migration
             $table->integer('viabilidade')->nullable()->comment('0 - Rádio | 1 - Fibra | 2 - Inviável');
             $table->string('observacao', 1000)->nullable();
 
+            $table->unsignedBigInteger('responsavel_id')->nullable();
+            $table->integer('status')->comment('0 - Ocupado | 1 - Contratou | 2 - Não contratou | 3 - Interesse | 4 - Livre');
+
+            $table->double('latitude')->nullable();
+            $table->double('longitude')->nullable();
+
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by');
 
+            $table->foreign('responsavel_id')->references('id')->on('usuarios')->onDelete('NO ACTION')->onUpdate('CASCADE');
             $table->foreign('como_soube_id')->references('id')->on('como_soube')->onDelete('NO ACTION')->onUpdate('CASCADE');
             $table->foreign('created_by')->references('id')->on('usuarios')->onDelete('NO ACTION')->onUpdate('CASCADE');
             $table->foreign('updated_by')->references('id')->on('usuarios')->onDelete('NO ACTION')->onUpdate('CASCADE');
