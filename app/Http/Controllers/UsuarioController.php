@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class UserController extends Controller
+class UsuarioController extends Controller
 {
     public function login ()
     {
@@ -47,7 +47,7 @@ class UserController extends Controller
     public function authenticate2(Request $request)
     {
         try {
-            $user = new User();
+            $user = new Usuario();
             $user->senha = Hash::make($request->senha);
             $user->email = $request->email;
             $user->nome = $request->nome;
