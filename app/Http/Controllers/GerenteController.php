@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use PDF;
 
 class GerenteController extends Controller
@@ -45,7 +46,6 @@ class GerenteController extends Controller
             $user->status = $request->status;
             $user->tipo_de_usuario = $request->tipo_de_usuario;
             $user->save();
-            $request->session()->regenerate();
         } catch (\Exception $e) {
             return redirect()->back()
                 ->with('header', 'Error')
@@ -163,5 +163,54 @@ class GerenteController extends Controller
             return response()->json(array('sucesso' => false, 'error' => $e->getMessage()));
         }
         return response()->json(array('sucesso' => true, 'data' => $usuario));
+    }
+
+    public function gerenciar_funcionario()
+    {
+        $usuario = Usuario::orderBy('nome', 'asc')->simplePaginate(25);
+        return view('gerente.gerenciar_funcionario', ['usuario' => $usuario]);
+    }
+
+    public function atualiza_funcionario($id)
+    {
+        $usuario = Usuario::where('id', $id)->first();
+        return view('gerente.atualiza_funcionario', ['usuario' => $usuario]);
+    }
+
+    public function atualiza_funcionario_2(Request $request, $id)
+    {
+        try {
+            if (is_null($request->senha)) {
+                $data = $request->except(['_token', '_method', 'senha']);
+            } else {
+                $data = $request->except(['_token', '_method']);
+            }
+            Usuario::where('id', $id)->update($data);
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('header', 'Error')
+                ->with('message', 'Failed updated with message "' . $e->getMessage() . '"')
+                ->with('status', 'error');
+        }
+        return redirect()->back()
+            ->with('header', 'Success')
+            ->with('message', 'Successfully updated')
+            ->with('status', 'success');
+    }
+
+    public function deleta_usuario($id)
+    {
+        try {
+            Usuario::where('id', $id)->delete();
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('header', 'Error')
+                ->with('message', 'Failed deleted with message "' . $e->getMessage() . '"')
+                ->with('status', 'error');
+        }
+        return redirect()->route('gerente.gerenciar_funcionario')
+            ->with('header', 'Success')
+            ->with('message', 'Successfully deleted')
+            ->with('status', 'success');
     }
 }
