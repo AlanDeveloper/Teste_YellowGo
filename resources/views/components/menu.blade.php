@@ -48,6 +48,11 @@
                             <span style="padding-left: 20px;">Como Soube</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('comercial_ativo.adiciona') }}" @if (URL::full() == route('comercial_ativo.adiciona')) class="active" @endif>
+                            <span style="padding-left: 20px;">Cadastrar Lead</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
             @endif

@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
+    # MÓDULO DE PERFIL
     Route::get('/perfil', [UsuarioController::class, 'perfil'])->name('perfil');
     Route::put('/perfil', [UsuarioController::class, 'salva_perfil'])->name('salva_perfil');
 
@@ -57,25 +58,25 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/como_soube/{id}', [ComoSoubeController::class, 'deleta'])->name('como_soube.deleta');
 
-    ## MÓDULO COMO SOUBE
-    Route::get('/cliente/adiciona', [ComercialAtivoController::class, 'adiciona'])->name('cliente.adiciona');
-    Route::post('/cliente/adiciona', [ComercialAtivoController::class, 'salva']);
+    ## MÓDULO DE COMERCIAL ATIVO
+    Route::get('/comercial_ativo/adiciona', [ComercialAtivoController::class, 'adiciona'])->name('comercial_ativo.adiciona');
+    Route::post('/comercial_ativo/adiciona', [ComercialAtivoController::class, 'salva']);
 
     Route::post('/comercial_ativo/{id}/atualizar_cliente', [ComercialAtivoController::class, 'atualizar_cliente'])->name('comercial_ativo.atualizar_cliente');
 
-    ## MÓDULO COMO SOUBE
+    ## MÓDULO DE COMERCIAL PASSIVO
     Route::get('/comercial_passivo', [ComercialPassivoController::class, 'index'])->name('comercial_passivo.index');
 
     Route::get('/comercial_passivo/{id}/pegar_cliente', [ComercialPassivoController::class, 'pegar_cliente'])->name('comercial_passivo.pegar_cliente');
     Route::post('/comercial_passivo/{id}/atualizar_cliente', [ComercialPassivoController::class, 'atualizar_cliente'])->name('comercial_passivo.atualizar_cliente');
 
-    # MÓDULO COMO SOUBE
+    # MÓDULO DE COMERCIAL PAP
     Route::get('/comercial_pap/adiciona', [ComercialPAPController::class, 'adiciona'])->name('comercial_pap.adiciona');
     Route::post('/comercial_pap/adiciona', [ComercialPAPController::class, 'salva']);
 
     Route::post('/comercial_pap/{id}/atualizar_cliente', [ComercialPAPController::class, 'atualizar_cliente'])->name('comercial_pap.atualizar_cliente');
 
-    # MÓDULO COMO SOUBE
+    # MÓDULO DE COMERCIAL REATIVO
     Route::get('/comercial_reativo', [ComercialReativoController::class, 'index'])->name('comercial_reativo.index');
 
     Route::get('/comercial_reativo/{id}/pegar_cliente', [ComercialPassivoController::class, 'pegar_cliente'])->name('comercial_reativo.pegar_cliente');

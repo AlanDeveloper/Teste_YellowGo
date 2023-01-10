@@ -19,6 +19,10 @@
     </div>
     <input type="submit" value="Procurar">
 </form>
+<div>
+    <label for="selecionar_todos">Selecionar todos</label>
+    <input type="checkbox" name="selecionar_todos" id="selecionar_todos">
+</div>
 <form method="post">
     @csrf
     <table>
@@ -68,4 +72,18 @@
 <div style="text-align: center">
     {{ $cliente->links() }}
 </div>
+@endsection
+
+@section('scripts')
+<script>
+    $("#selecionar_todos").change(function() {
+        let checked = $(this).is(":checked");
+
+        $("form input[type='checkbox']").each(function () {
+            if (!$(this).attr("disabled")) {
+                $(this).prop( "checked", checked);
+            }
+        });
+    });
+</script>
 @endsection
