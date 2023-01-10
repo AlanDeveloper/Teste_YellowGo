@@ -7,3 +7,11 @@ $("#closeMenu").click(function () {
         $("body").css("grid-template-columns", "1fr 0px");
     }
 });
+
+$("section ul li > span").click(function () {
+    if ($(this).parent().children("ul").css("height") == "0px") {
+        $(this).parent().children("ul").css("height", "auto");
+    } else {
+        $(this).parent().children("ul").css("height", "0px");
+    }
+});
