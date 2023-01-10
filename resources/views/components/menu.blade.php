@@ -8,9 +8,15 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('register') }}" @if (URL::full() == route('register')) class="active" @endif>
+                <a href="{{ route('gerente.cadastro_funcionario') }}" @if (URL::full() == route('gerente.cadastro_funcionario')) class="active" @endif>
                     <span class="icon"><i class="tes te-solicitation"></i></span>
                     <span>G - Cadastrar funcionário</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('gerente.relatorio_conversao') }}" @if (URL::full() == route('gerente.relatorio_conversao')) class="active" @endif>
+                    <span class="icon"><i class="tes te-solicitation"></i></span>
+                    <span>G - Relatório de conversão</span>
                 </a>
             </li>
             <li>

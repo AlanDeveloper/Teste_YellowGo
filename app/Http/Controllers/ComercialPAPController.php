@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Atendimento;
 use App\Models\Cliente;
 use App\Models\ComoSoube;
 use Illuminate\Http\Request;
@@ -86,6 +87,12 @@ class ComercialPAPController extends Controller
                 array(
                     'status' => $request->status,
                     'responsavel_id' => null,
+                )
+            );
+            Atendimento::create(
+                array(
+                    'status' => $request->status,
+                    'cliente_id' => $id
                 )
             );
         } catch (\Exception $e) {

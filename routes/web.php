@@ -6,6 +6,7 @@ use App\Http\Controllers\ComercialPassivoController;
 use App\Http\Controllers\ComercialReativoController;
 use App\Http\Controllers\ComoSoubeController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GerenteController;
 use App\Http\Controllers\MarketingController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
@@ -80,6 +81,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/marketing', [MarketingController::class, 'index'])->name('marketing.index');
     Route::post('/marketing', [MarketingController::class, 'enviar_emails'])->name('marketing.enviar_emails');
 
-    Route::get('/register', [UsuarioController::class, 'register'])->name('register');
-    Route::post('/register', [UsuarioController::class, 'authenticate2']);
+    # MÓDULO COMO SOUBE
+    Route::get('/gerente/relatorio_conversao', [GerenteController::class, 'relatorio_conversao'])->name('gerente.relatorio_conversao');
+
+    Route::get('/gerente/cadastro_funcionario', [GerenteController::class, 'cadastro_funcionario'])->name('gerente.cadastro_funcionario');
+    Route::post('/gerente/cadastro_funcionario', [GerenteController::class, 'authenticate2']);
+
+    Route::get('/gerente/exportarCSV', [GerenteController::class, 'exportarCSV'])->name('gerente.exportarCSV');
+    Route::get('/gerente/exportarPDF', [GerenteController::class, 'exportarPDF'])->name('gerente.exportarPDF');
 });

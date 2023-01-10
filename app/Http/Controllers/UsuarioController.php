@@ -39,35 +39,6 @@ class UsuarioController extends Controller
             ->withInput();
     }
 
-    public function register()
-    {
-        return view('register');
-    }
-
-    public function authenticate2(Request $request)
-    {
-        try {
-            $user = new Usuario();
-            $user->senha = Hash::make($request->senha);
-            $user->email = $request->email;
-            $user->nome = $request->nome;
-            $user->status = $request->status;
-            $user->tipo_de_usuario = $request->tipo_de_usuario;
-            $user->save();
-            $request->session()->regenerate();
-        } catch (\Exception $e) {
-            return redirect()->back()
-                ->with('header', 'Error')
-                ->with('message', 'Failed created with message "' . $e->getMessage() . '"')
-                ->with('status', 'error')
-                ->withInput();
-        }
-        return redirect()->back()
-            ->with('header', 'Success')
-            ->with('message', 'Successfully created')
-            ->with('status', 'success');
-    }
-
     public function logout(Request $request)
     {
         Auth::logout();

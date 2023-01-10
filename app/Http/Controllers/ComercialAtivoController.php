@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Atendimento;
 use App\Models\Cliente;
 use App\Models\ComoSoube;
 use Illuminate\Http\Request;
@@ -83,6 +84,12 @@ class ComercialAtivoController extends Controller
                 'status' => $request->status,
                 'responsavel_id' => null,
             ));
+            Atendimento::create(
+                array(
+                    'status' => $request->status,
+                    'cliente_id' => $id
+                )
+            );
         } catch (\Exception $e) {
             return redirect()->back()
                 ->with('header', 'Error')

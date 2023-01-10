@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Atendimento;
 use App\Models\Cliente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -25,6 +26,12 @@ class ComercialReativoController extends Controller
                     'responsavel_id' => auth()->user()->id
                 )
             );
+            Atendimento::create(
+                array(
+                    'status' => '0',
+                    'cliente_id' => $id
+                )
+            );
         } catch (\Exception $e) {
             return redirect()->back()
                 ->with('header', 'Error')
@@ -45,6 +52,12 @@ class ComercialReativoController extends Controller
                 array(
                     'status' => $request->status,
                     'responsavel_id' => null,
+                )
+            );
+            Atendimento::create(
+                array(
+                    'status' => $request->status,
+                    'cliente_id' => $id
                 )
             );
         } catch (\Exception $e) {
