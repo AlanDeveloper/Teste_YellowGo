@@ -89,4 +89,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/gerente/exportarCSV', [GerenteController::class, 'exportarCSV'])->name('gerente.exportarCSV');
     Route::get('/gerente/exportarPDF', [GerenteController::class, 'exportarPDF'])->name('gerente.exportarPDF');
+
+    Route::get('/gerente/conversoes_contratados', [GerenteController::class, 'conversoes_contratados'])->name('gerente.conversoes_contratados');
+    Route::get('/gerente/todas_conversoes', [GerenteController::class, 'todas_conversoes'])->name('gerente.todas_conversoes');
 });

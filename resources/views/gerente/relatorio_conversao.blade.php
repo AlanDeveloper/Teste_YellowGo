@@ -21,9 +21,14 @@
             <option value="4" @if (request('tipo_de_usuario') == '4') selected @endif>Comercial PAP</option>
         </select>
     </div>
+    <div>
+        <label for="data">Data</label>
+        <input type="date" name="data" id="data" value="{{ request('data') }}">
+    </div>
     <input type="submit" value="Procurar">
 </form>
 <a href="{{ route('gerente.exportarCSV') }}">Exportar CSV</a>
+<a href="{{ route('gerente.exportarPDF') }}">Exportar PDF</a>
 <table>
     <thead>
         <tr>
@@ -48,4 +53,67 @@
 <div style="text-align: center">
     {{ $usuario->links() }}
 </div>
+
+<canvas id="conversoes_contratados"></canvas>
+<canvas id="todas_conversoes"></canvas>
+@endsection
+
+@section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    let url = "?" + window.location.href.split('?')[1];
+    $.getJSON("/gerente/conversoes_contratados" + url, function(colaboradores) {
+
+        if (colaboradores.sucesso) {
+
+            const ctx = document.getElementById('conversoes_contratados');
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: colaboradores.data.map(usuario => usuario.nome),
+                    datasets: [{
+                        label: 'Clientes que contraram um plano',
+                        data: colaboradores.data.map(usuario => usuario.contratados),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    });
+
+    $.getJSON("/gerente/todas_conversoes" + url, function(colaboradores) {
+
+        if (colaboradores.sucesso) {
+
+            const ctx = document.getElementById('todas_conversoes');
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: colaboradores.data.map(usuario => usuario.nome),
+                    datasets: [{
+                        label: 'Clientes que contraram um plano',
+                        data: colaboradores.data.map(usuario => usuario.atendimentos),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    });
+</script>
 @endsection

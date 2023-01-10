@@ -5,21 +5,24 @@ namespace App\Http\Controllers;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 class GerenteController extends Controller
 {
     public function relatorio_conversao(Request $request)
     {
-        $contratados = DB::raw('(SELECT COUNT(*) FROM atendimentos WHERE deleted_at IS NULL AND atendimentos.created_by = usuarios.id AND atendimentos.status = 1) AS contratados');
-        $total = DB::raw('(SELECT COUNT(DISTINCT cliente_id) FROM atendimentos WHERE deleted_at IS NULL AND atendimentos.created_by = usuarios.id) AS total');
+        $aux = "";
+        if ($request->data) {
+            $aux = (' AND DATE_FORMAT(atendimentos.created_at, "%Y-%m-%d") = "' . $request->data . '"');
+        }
+        $contratados = DB::raw('(SELECT COUNT(*) FROM atendimentos WHERE deleted_at IS NULL AND atendimentos.created_by = usuarios.id AND atendimentos.status = 1' . $aux . ') AS contratados');
+        $total = DB::raw('(SELECT COUNT(DISTINCT cliente_id) FROM atendimentos WHERE deleted_at IS NULL AND atendimentos.created_by = usuarios.id' . $aux . ') AS total');
         $usuario = Usuario::select('*', $contratados, $total)->orderBy('nome', 'asc');
 
         if ($request->responsavel_id) {
-
             $usuario = $usuario->where('id', $request->responsavel_id);
         }
         if ($request->tipo_de_usuario) {
-
             $usuario = $usuario->where('tipo_de_usuario', $request->tipo_de_usuario);
         }
         $usuario = $usuario->simplePaginate(25);
@@ -58,8 +61,12 @@ class GerenteController extends Controller
 
     public function exportarCSV(Request $request)
     {
-        $contratados = DB::raw('(SELECT COUNT(*) FROM atendimentos WHERE deleted_at IS NULL AND atendimentos.created_by = usuarios.id AND atendimentos.status = 1) AS contratados');
-        $total = DB::raw('(SELECT COUNT(DISTINCT cliente_id) FROM atendimentos WHERE deleted_at IS NULL AND atendimentos.created_by = usuarios.id) AS total');
+        $aux = "";
+        if ($request->data) {
+            $aux = (' AND DATE_FORMAT(atendimentos.created_at, "%Y-%m-%d") = "' . $request->data . '"');
+        }
+        $contratados = DB::raw('(SELECT COUNT(*) FROM atendimentos WHERE deleted_at IS NULL AND atendimentos.created_by = usuarios.id AND atendimentos.status = 1' . $aux . ') AS contratados');
+        $total = DB::raw('(SELECT COUNT(DISTINCT cliente_id) FROM atendimentos WHERE deleted_at IS NULL AND atendimentos.created_by = usuarios.id' . $aux . ') AS total');
         $usuario = Usuario::select('*', $contratados, $total)->orderBy('nome', 'asc');
 
         if ($request->responsavel_id) {
@@ -102,6 +109,59 @@ class GerenteController extends Controller
 
     public function exportarPDF(Request $request)
     {
-        //
+        $usuario = Usuario::all();
+        return view('gerente.pdf', ['usuario' => $usuario]);
+        // retreive all records from db
+        // share data to view
+        view()->share('usuario', $usuario);
+        $pdf = PDF::loadView('gerente.teste', $usuario);
+        // download PDF file with download method
+        return $pdf->download('pdf_file.pdf');
+    }
+
+    public function conversoes_contratados(Request $request)
+    {
+        try {
+            $aux = "";
+            if ($request->data) {
+                $aux = (' AND DATE_FORMAT(atendimentos.created_at, "%Y-%m-%d") = "' . $request->data . '"');
+            }
+            $contratados = DB::raw('(SELECT COUNT(*) FROM atendimentos WHERE deleted_at IS NULL AND atendimentos.created_by = usuarios.id AND atendimentos.status = 1' . $aux . ') AS contratados');
+            $usuario = Usuario::select('*', $contratados)->orderBy('nome', 'asc');
+
+            if ($request->responsavel_id) {
+                $usuario = $usuario->where('id', $request->responsavel_id);
+            }
+            if ($request->tipo_de_usuario) {
+                $usuario = $usuario->where('tipo_de_usuario', $request->tipo_de_usuario);
+            }
+            $usuario = $usuario->get();
+        } catch (\Exception $e) {
+            return response()->json(array('sucesso' => false, 'error' => $e->getMessage()));
+        }
+        return response()->json(array('sucesso' => true, 'data' => $usuario));
+    }
+
+    public function todas_conversoes(Request $request)
+    {
+        try {
+            $aux = "";
+            if ($request->data) {
+                $aux = (' AND DATE_FORMAT(atendimentos.created_at, "%Y-%m-%d") = "' . $request->data . '"');
+            }
+            $atendimentos = DB::raw('(SELECT COUNT(*) FROM atendimentos WHERE deleted_at IS NULL AND atendimentos.created_by = usuarios.id' . $aux . ') AS atendimentos');
+            $usuario = Usuario::select('*', $atendimentos)->orderBy('nome', 'asc');
+
+            if ($request->responsavel_id) {
+                $usuario = $usuario->where('id', $request->responsavel_id);
+            }
+            if ($request->tipo_de_usuario) {
+                $usuario = $usuario->where('tipo_de_usuario', $request->tipo_de_usuario);
+            }
+            $usuario = $usuario->get();
+        } catch (\Exception $e) {
+            return response()->json(array('sucesso' => false, 'error' => $e->getMessage()));
+        }
+        return response()->json(array('sucesso' => true, 'data' => $usuario));
     }
 }
