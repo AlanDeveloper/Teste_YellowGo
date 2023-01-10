@@ -1,7 +1,6 @@
 <?php
 
 echo "-----------Segundo exercício----------- \n";
-echo "\nInforme as posições separado por espaços(ex: a b c d e f)\n";
 
 function fatorial ($i)
 {
@@ -14,71 +13,52 @@ function fatorial ($i)
     return $calc;
 }
 
-$posicoes = array();
-$str = null;
-for ($i = 0; $i < 1; $i++) {
-    $str = readline("Informe a posição: ");
-    if ($str == "") {
-        $i--;
-        continue;
+function meuCount($array)
+{
+    $i = 0;
+
+    while (true) {
+        if ($array[$i]) {
+            $i++;
+        } else {
+            break;
+        }
     }
-    $posicoes = explode(' ', $str);
+    return $i;
 }
 
-$num_triangulos = fatorial(count($posicoes)) / (fatorial(3) * fatorial(count($posicoes) - 3));
+$posicoes = array(1, 2, 3, 4, 4, 5);
+$posicoes_str = array('a', 'b', 'c', 'd', 'e', 'f');
+$c = meuCount($posicoes);
+$num_triangulos = fatorial($c) / (fatorial(3) * fatorial($c - 3));
 
 if ($num_triangulos < 1) {
     echo "\nNão é possível formar nenhum triângulo";
     exit;
 }
 
-echo "\nÉ possível formar " . $num_triangulos . " triângulos!";
+$equilatero = 0;
+$isosceles = 0;
+$escaleno = 0;
 
-$equilatero = array();
-$isosceles = array();
-$escaleno = array();
+$a = array();
+for ($i=0; $i < $c; $i++) {
+    for ($j=$i+1; $j < $c; $j++) {
+        for ($k=$j+1; $k < $c; $k++) {
+            $a[] = $posicoes_str[$i] . " " . $posicoes_str[$j] . " " . $posicoes_str[$k];
 
-$pos1 = null;
-$pos2 = null;
-$pos3 = null;
-while (true) {
-    if ((count($equilatero) + count($isosceles) + count($escaleno)) == $num_triangulos) {
-        break;
+            if ($posicoes[$i] == $posicoes[$j] && $posicoes[$j] == $posicoes[$k]) {
+                $equilatero++;
+            } else if (($posicoes[$i] == $posicoes[$j] || $posicoes[$i] == $posicoes[$k] || $posicoes[$j] == $posicoes[$k])) {
+                $isosceles++;
+            } else {
+                $escaleno++;
+            }
+        }
     }
-
-    while ($pos1 == $pos2 || $pos1 == $pos3 || $pos3 == $pos2) {
-
-        $pos1 = rand(0, count($posicoes) - 1);
-        $pos2 = rand(0, count($posicoes) - 1);
-        $pos3 = rand(0, count($posicoes) - 1);
-    }
-
-    if (array_search($posicoes[$pos1] . "" . $posicoes[$pos2] . "" . $posicoes[$pos3], $equilatero) || array_search($posicoes[$pos1] . "" . $posicoes[$pos2] . "" . $posicoes[$pos3], $isosceles) || array_search($posicoes[$pos1] . "" . $posicoes[$pos2] . "" . $posicoes[$pos3], $escaleno)) {
-        $pos1 = null;
-        $pos2 = null;
-        $pos3 = null;
-
-        continue;
-    }
-
-    if ($posicoes[$pos1] == $posicoes[$pos2] && $posicoes[$pos1] == $posicoes[$pos3]) {
-        array_push($equilatero, $posicoes[$pos1] . "" . $posicoes[$pos2] . "" . $posicoes[$pos3]);
-    } else if (($posicoes[$pos1] == $posicoes[$pos2] || $posicoes[$pos1] == $posicoes[$pos3] || $posicoes[$pos2] == $posicoes[$pos3])) {
-        array_push($isosceles, $posicoes[$pos1] . "" . $posicoes[$pos2] . "" . $posicoes[$pos3]);
-    } else {
-        array_push($escaleno, $posicoes[$pos1] . "" . $posicoes[$pos2] . "" . $posicoes[$pos3]);
-    }
-
-    $pos1 = null;
-    $pos2 = null;
-    $pos3 = null;
 }
 
-echo "\nN° de triângulos equiláteros: " . count($equilatero);
-echo "\nN° de triângulos isósceles: " . count($isosceles);
-echo "\nN° de triângulos escaleno: " . count($escaleno);
-
-
-print_r($equilatero);
-print_r($escaleno);
-print_r($isosceles);
+echo "\nÉ possível formar " . $num_triangulos . " triângulo(s)!\n";
+echo "\nN° de triângulos equiláteros: " . $equilatero;
+echo "\nN° de triângulos isósceles: " . $isosceles;
+echo "\nN° de triângulos escaleno: " . $escaleno;
