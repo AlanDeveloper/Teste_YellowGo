@@ -39,6 +39,32 @@ class UsuarioController extends Controller
             ->withInput();
     }
 
+    public function perfil()
+    {
+        return view('perfil');
+    }
+
+    public function salva_perfil(Request $request)
+    {
+        try {
+            if (is_null($request->senha)) {
+                $data = $request->except(['_token', '_method', 'senha']);
+            } else {
+                $data = $request->except(['_token', '_method']);
+            }
+            Usuario::where('id', auth()->user()->id)->update($data);
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('header', 'Error')
+                ->with('message', 'Failed updated with message "' . $e->getMessage() . '"')
+                ->with('status', 'error');
+        }
+        return redirect()->route('perfil')
+            ->with('header', 'Success')
+            ->with('message', 'Successfully updated')
+            ->with('status', 'success');
+    }
+
     public function logout(Request $request)
     {
         Auth::logout();

@@ -43,6 +43,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
+    Route::get('/perfil', [UsuarioController::class, 'perfil'])->name('perfil');
+    Route::put('/perfil', [UsuarioController::class, 'salva_perfil'])->name('salva_perfil');
+
     # MÓDULO COMO SOUBE
     Route::get('/como_soube', [ComoSoubeController::class, 'index'])->name('como_soube.index');
 
@@ -78,11 +81,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/comercial_reativo/{id}/pegar_cliente', [ComercialPassivoController::class, 'pegar_cliente'])->name('comercial_reativo.pegar_cliente');
     Route::post('/comercial_reativo/{id}/atualizar_cliente', [ComercialPassivoController::class, 'atualizar_cliente'])->name('comercial_reativo.atualizar_cliente');
 
-    # MÓDULO COMO SOUBE
+    # MÓDULO DE MARKETING
     Route::get('/marketing', [MarketingController::class, 'index'])->name('marketing.index');
     Route::post('/marketing', [MarketingController::class, 'enviar_emails'])->name('marketing.enviar_emails');
 
-    # MÓDULO COMO SOUBE
+    # MÓDULO DE GERENTE
     Route::get('/gerente/relatorio_conversao', [GerenteController::class, 'relatorio_conversao'])->name('gerente.relatorio_conversao');
 
     Route::get('/gerente/cadastro_funcionario', [GerenteController::class, 'cadastro_funcionario'])->name('gerente.cadastro_funcionario');
