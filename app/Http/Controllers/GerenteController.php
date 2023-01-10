@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Atendimento;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,9 +17,9 @@ class GerenteController extends Controller
         if ($request->data) {
             $aux = (' AND DATE_FORMAT(atendimentos.created_at, "%Y-%m-%d") = "' . $request->data . '"');
         }
-        $contratados = DB::raw('(SELECT COUNT(*) FROM atendimentos WHERE deleted_at IS NULL AND atendimentos.created_by = usuarios.id AND atendimentos.status = 1' . $aux . ') AS contratados');
-        $total = DB::raw('(SELECT COUNT(DISTINCT cliente_id) FROM atendimentos WHERE deleted_at IS NULL AND atendimentos.created_by = usuarios.id' . $aux . ') AS total');
-        $usuario = Usuario::select('*', $contratados, $total)->orderBy('nome', 'asc');
+        $convertidos = DB::raw('(select count(*) from (select COUNT(*) from `atendimentos` where atendimentos.`status` != 0 and atendimentos.cliente_id IN (SELECT cliente_id FROM atendimentos WHERE atendimentos.status = 1 AND deleted_at IS NULL) and `atendimentos`.`deleted_at` is null and atendimentos.created_by' . $aux . ' group by cliente_id having COUNT(*) > 1) s) as convertidos');
+        $total = DB::raw('(select count(*) from (select COUNT(*) from `atendimentos` where atendimentos.`status` != 0 and `atendimentos`.`deleted_at` is null and atendimentos.created_by' . $aux . ' group by cliente_id having COUNT(*) > 1) s2) as total');
+        $usuario = Usuario::select('*', $convertidos, $total)->orderBy('nome', 'asc');
 
         if ($request->responsavel_id) {
             $usuario = $usuario->where('id', $request->responsavel_id);

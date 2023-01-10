@@ -40,7 +40,7 @@
         @foreach ($usuario as $u)
         <tr>
             <td>{{ $u->nome }}</td>
-            <td>{{ number_format($u->contratados / ($u->total == 0 ? 1 : $u->total) * 100, 0) }}%</td>
+            <td>{{ number_format($u->convertidos / ($u->total == 0 ? 1 : $u->total) * 100, 0) }}%</td>
         </tr>
         @endforeach
         @if (count($usuario) == 0)

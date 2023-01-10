@@ -1,16 +1,21 @@
 <section>
     <nav>
         <ul>
-            @if (auth()->user()->tipo_de_usuario == 2 || auth()->user()->tipo_de_usuario == 0)
+            @if (auth()->user()->tipo_de_usuario == 1 || auth()->user()->tipo_de_usuario == 0)
             <li>
                 <span>
-                    <p style="padding-left: 20px;">Comercial Passivo</p>
+                    <p style="padding-left: 20px;">Comercial Ativo</p>
                     <span class="icon"><i class="tes te-dropdown"></i></span>
                 </span>
                 <ul class="dropdown">
                     <li>
-                        <a href="{{ route('comercial_passivo.index') }}" @if (URL::full() == route('comercial_passivo.index')) class="active" @endif>
-                            <span style="padding-left: 20px;">Lista de Leads</span>
+                        <a href="{{ route('comercial_ativo.adiciona') }}" @if (URL::full() == route('comercial_ativo.adiciona')) class="active" @endif>
+                            <span style="padding-left: 20px;">Cadastrar Lead</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('como_soube.index') }}" @if (URL::full() == route('como_soube.index')) class="active" @endif>
+                            <span style="padding-left: 20px;">Como Soube</span>
                         </a>
                     </li>
                 </ul>
@@ -36,21 +41,16 @@
                 </ul>
             </li>
             @endif
-            @if (auth()->user()->tipo_de_usuario == 1 || auth()->user()->tipo_de_usuario == 0)
+            @if (auth()->user()->tipo_de_usuario == 2 || auth()->user()->tipo_de_usuario == 0)
             <li>
                 <span>
-                    <p style="padding-left: 20px;">Comercial Ativo</p>
+                    <p style="padding-left: 20px;">Comercial Passivo</p>
                     <span class="icon"><i class="tes te-dropdown"></i></span>
                 </span>
                 <ul class="dropdown">
                     <li>
-                        <a href="{{ route('como_soube.index') }}" @if (URL::full() == route('como_soube.index')) class="active" @endif>
-                            <span style="padding-left: 20px;">Como Soube</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('comercial_ativo.adiciona') }}" @if (URL::full() == route('comercial_ativo.adiciona')) class="active" @endif>
-                            <span style="padding-left: 20px;">Cadastrar Lead</span>
+                        <a href="{{ route('comercial_passivo.index') }}" @if (URL::full() == route('comercial_passivo.index')) class="active" @endif>
+                            <span style="padding-left: 20px;">Lista de Leads</span>
                         </a>
                     </li>
                 </ul>
@@ -79,6 +79,11 @@
                 </span>
                 <ul class="dropdown">
                     <li>
+                        <a href="{{ route('gerente.cadastro_funcionario') }}" @if (URL::full() == route('gerente.cadastro_funcionario')) class="active" @endif>
+                            <span style="padding-left: 20px;">Cadastrar funcionário</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ route('plano.index') }}" @if (URL::full() == route('plano.index')) class="active" @endif>
                             <span style="padding-left: 20px;">Cadastrar planos</span>
                         </a>
@@ -86,11 +91,6 @@
                     <li>
                         <a href="{{ route('gerente.gerenciar_funcionario') }}" @if (URL::full() == route('gerente.gerenciar_funcionario')) class="active" @endif>
                             <span style="padding-left: 20px;">Gerenciar funcionários</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('gerente.cadastro_funcionario') }}" @if (URL::full() == route('gerente.cadastro_funcionario')) class="active" @endif>
-                            <span style="padding-left: 20px;">Cadastrar funcionário</span>
                         </a>
                     </li>
                     <li>

@@ -45,10 +45,15 @@
             }
 
             $status = number_format (($count - 5) / ($total - 5) * 100, 0);
+            $nao_listado = true;
+        @endphp
+        @if ($status >= 40)
+        @php
+            $nao_listado = false;
         @endphp
         <tr>
             <td>{{ $c->nome }}</td>
-            <td>{{ $status >= 75 ? 'Quente' : ($status < 75 && $status >= 40 ? 'Morno' : 'Frio') }} ({{ $status }}%)</td>
+            <td>{{ $status >= 75 ? 'Quente' : 'Morno' }} ({{ $status }}%)</td>
             <td>{{ isset($c->responsavel) ? $c->responsavel : '-'}}</td>
             <td>
                 <form action="{{ route('comercial_reativo.pegar_cliente', $c->id) }}">
@@ -57,8 +62,9 @@
                 </form>
             </td>
         </tr>
+        @endif
         @endforeach
-        @if (count($cliente) == 0)
+        @if (count($cliente) == 0 || $nao_listado)
         <tr>
             <td colspan="1">Nenhum dado registrado</td>
         </tr>

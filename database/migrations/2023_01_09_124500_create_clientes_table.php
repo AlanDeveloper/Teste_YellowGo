@@ -21,7 +21,7 @@ class CreateClientesTable extends Migration
             $table->string('nome', 255)->nullable();
             $table->string('email', 255)->unique()->nullable();
             $table->unsignedBigInteger('como_soube_id')->nullable();
-            $table->string('cpf', 11)->nullable();
+            $table->string('cpf', 14)->nullable();
             $table->string('cep', 9)->nullable();
             $table->string('rua', 255)->nullable();
             $table->integer('numero')->nullable();
