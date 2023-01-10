@@ -37,7 +37,7 @@ class ComercialPAPController extends Controller
             } else {
                 $method = 'POST';
                 if (is_null($request->latitude) || is_null($request->longitude)) {
-                    throw (new \Exception("Enter your location on the map."));
+                    throw (new \Exception("Insira a sua localização no mapa."));
                 }
 
                 $data = $request->all();
@@ -48,13 +48,13 @@ class ComercialPAPController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()
                 ->with('header', 'Error')
-                ->with('message', 'Failed ' . ($method == 'POST' ? 'created' : 'updated') . ' with message "' . $e->getMessage() . '"')
+                ->with('message', 'Falha ao ' . ($method == 'POST' ? 'criar' : 'atualizar') . ' com mensagem"' . $e->getMessage() . '"')
                 ->with('status', 'error')
                 ->withInput();
         }
         return redirect()->back()
             ->with('header', 'Success')
-            ->with('message', 'Successfully ' . ($method == 'POST' ? 'created' : 'updated'))
+            ->with('message', 'Sucesso ao ' . ($method == 'POST' ? 'criar' : 'atualizar'))
             ->with('status', 'success');
     }
 
@@ -65,12 +65,12 @@ class ComercialPAPController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()
                 ->with('header', 'Error')
-                ->with('message', 'Failed deleted with message "' . $e->getMessage() . '"')
+                ->with('message', 'Falha ao deletar com mensagem "' . $e->getMessage() . '"')
                 ->with('status', 'error');
         }
         return redirect()->route('comercial_pap.index')
             ->with('header', 'Success')
-            ->with('message', 'Successfully deleted')
+            ->with('message', 'Sucesso ao deletar')
             ->with('status', 'success');
     }
 
@@ -98,12 +98,12 @@ class ComercialPAPController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()
                 ->with('header', 'Error')
-                ->with('message', 'Failed deleted with message "' . $e->getMessage() . '"')
+                ->with('message', 'Falha ao deletar com mensagem "' . $e->getMessage() . '"')
                 ->with('status', 'error');
         }
         return redirect()->route('comercial_pap.index')
             ->with('header', 'Success')
-            ->with('message', 'Successfully deleted')
+            ->with('message', 'Sucesso ao deletar')
             ->with('status', 'success');
     }
 }

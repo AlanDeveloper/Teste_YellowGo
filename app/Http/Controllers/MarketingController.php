@@ -56,12 +56,12 @@ class MarketingController extends Controller
             }
             return redirect()->back()
                 ->with('header', 'Error')
-                ->with('message', 'Failed to send emails with message "' . $e->getMessage() . '"')
+                ->with('message', 'Falha ao enviar emails com mensagem "' . $e->getMessage() . '"')
                 ->with('status', 'error');
         }
         return redirect()->back()
             ->with('header', 'Success')
-            ->with('message', 'Successfully deleted')
+            ->with('message', 'Sucesso ao enviar emails')
             ->with('status', 'success');
     }
 }

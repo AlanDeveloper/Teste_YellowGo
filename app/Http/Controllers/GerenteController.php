@@ -49,13 +49,13 @@ class GerenteController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()
                 ->with('header', 'Error')
-                ->with('message', 'Failed created with message "' . $e->getMessage() . '"')
+                ->with('message', 'Falha ao criar com mensagem "' . $e->getMessage() . '"')
                 ->with('status', 'error')
                 ->withInput();
         }
         return redirect()->back()
             ->with('header', 'Success')
-            ->with('message', 'Successfully created')
+            ->with('message', 'Sucesso ao criar')
             ->with('status', 'success');
     }
 
@@ -189,12 +189,12 @@ class GerenteController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()
                 ->with('header', 'Error')
-                ->with('message', 'Failed updated with message "' . $e->getMessage() . '"')
+                ->with('message', 'Falha ao atualizar com mensagem "' . $e->getMessage() . '"')
                 ->with('status', 'error');
         }
         return redirect()->back()
             ->with('header', 'Success')
-            ->with('message', 'Successfully updated')
+            ->with('message', 'Sucesso ao atualizar')
             ->with('status', 'success');
     }
 
@@ -205,12 +205,12 @@ class GerenteController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()
                 ->with('header', 'Error')
-                ->with('message', 'Failed deleted with message "' . $e->getMessage() . '"')
+                ->with('message', 'Falha ao deletar com mensagem "' . $e->getMessage() . '"')
                 ->with('status', 'error');
         }
         return redirect()->route('gerente.gerenciar_funcionario')
             ->with('header', 'Success')
-            ->with('message', 'Successfully deleted')
+            ->with('message', 'Sucesso ao deletar')
             ->with('status', 'success');
     }
 }

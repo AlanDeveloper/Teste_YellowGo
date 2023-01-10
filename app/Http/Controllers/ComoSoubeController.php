@@ -37,13 +37,13 @@ class ComoSoubeController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()
                 ->with('header', 'Error')
-                ->with('message', 'Failed ' . ($method == 'POST' ? 'created' : 'updated') . ' with message "' . $e->getMessage() . '"')
+                ->with('message', 'Falha ao ' . ($method == 'POST' ? 'criar' : 'atualizar') . ' com mensagem"' . $e->getMessage() . '"')
                 ->with('status', 'error')
                 ->withInput();
         }
         return redirect()->route('como_soube.index')
             ->with('header', 'Success')
-            ->with('message', 'Successfully ' . ($method == 'POST' ? 'created' : 'updated'))
+            ->with('message', 'Sucesso ao ' . ($method == 'POST' ? 'criar' : 'atualizar'))
             ->with('status', 'success');
     }
 
@@ -54,12 +54,12 @@ class ComoSoubeController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()
                 ->with('header', 'Error')
-                ->with('message', 'Failed deleted with message "' . $e->getMessage() . '"')
+                ->with('message', 'Falha ao deletar com mensagem "' . $e->getMessage() . '"')
                 ->with('status', 'error');
         }
         return redirect()->route('como_soube.index')
             ->with('header', 'Success')
-            ->with('message', 'Successfully deleted')
+            ->with('message', 'Sucesso ao deletar')
             ->with('status', 'success');
     }
 }

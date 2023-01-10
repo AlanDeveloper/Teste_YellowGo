@@ -34,7 +34,7 @@ class UsuarioController extends Controller
 
         return redirect()->back()
             ->with('header', 'Error')
-            ->with('message', 'The provided credentials do not match our records')
+            ->with('message', 'As credenciais fornecidas não correspondem aos nossos registros')
             ->with('status', 'error')
             ->withInput();
     }
@@ -56,12 +56,12 @@ class UsuarioController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()
                 ->with('header', 'Error')
-                ->with('message', 'Failed updated with message "' . $e->getMessage() . '"')
+                ->with('message', 'Falha ao atualizar com mensagem "' . $e->getMessage() . '"')
                 ->with('status', 'error');
         }
         return redirect()->route('perfil')
             ->with('header', 'Success')
-            ->with('message', 'Successfully updated')
+            ->with('message', 'Sucesso ao atualizar')
             ->with('status', 'success');
     }
 
