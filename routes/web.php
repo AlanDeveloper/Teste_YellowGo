@@ -8,6 +8,7 @@ use App\Http\Controllers\ComoSoubeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GerenteController;
 use App\Http\Controllers\MarketingController;
+use App\Http\Controllers\PlanoController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
@@ -92,4 +93,15 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/gerente/conversoes_contratados', [GerenteController::class, 'conversoes_contratados'])->name('gerente.conversoes_contratados');
     Route::get('/gerente/todas_conversoes', [GerenteController::class, 'todas_conversoes'])->name('gerente.todas_conversoes');
+
+    # MÓDULO DE PLANOS
+    Route::get('/plano', [PlanoController::class, 'index'])->name('plano.index');
+
+    Route::get('/plano/adiciona', [PlanoController::class, 'adiciona'])->name('plano.adiciona');
+    Route::post('/plano/adiciona', [PlanoController::class, 'salva']);
+
+    Route::get('/plano/{id}', [PlanoController::class, 'atualiza'])->name('plano.atualiza');
+    Route::put('/plano/{id}', [PlanoController::class, 'salva']);
+
+    Route::delete('/plano/{id}', [PlanoController::class, 'deleta'])->name('plano.deleta');
 });

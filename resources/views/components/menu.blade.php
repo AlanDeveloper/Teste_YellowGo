@@ -8,6 +8,12 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('plano.index') }}" @if (URL::full() == route('plano.index')) class="active" @endif>
+                    <span class="icon"><i class="tes te-solicitation"></i></span>
+                    <span>G - Cadastrar planos</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{ route('gerente.cadastro_funcionario') }}" @if (URL::full() == route('gerente.cadastro_funcionario')) class="active" @endif>
                     <span class="icon"><i class="tes te-solicitation"></i></span>
                     <span>G - Cadastrar funcionário</span>
