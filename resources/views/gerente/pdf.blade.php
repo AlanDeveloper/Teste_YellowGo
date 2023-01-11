@@ -4,12 +4,6 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ asset('css/app.min.css') }}">
-    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/jquery.toast.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/fontawesome.min.css') }}">
-    @yield('styles')
     <style>
         body {
             grid-template-areas:
@@ -22,22 +16,22 @@
 <body>
     <main>
         <div id="content">
-            <table>
-                <thead>
+            <table style="border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; width: 100%; margin: 0 auto; position: relative; box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;">
+                <thead style="height: 60px; background: #1B1717; color: #fff;">
                     <tr>
                         <th>Nome</th>
                         <th>Total de conversões</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody style="text-align: center;">
                     @foreach ($usuario as $u)
-                    <tr>
+                    <tr style="font-family: OpenSans-Regular; font-size: 15px; color: gray; line-height: 1.2; font-weight: unset; height: 50px; border-bottom: 1px solid #f5f5f5;">
                         <td>{{ $u->nome }}</td>
                         <td>{{ number_format($u->contratados / ($u->total == 0 ? 1 : $u->total) * 100, 0) }}%</td>
                     </tr>
                     @endforeach
                     @if (count($usuario) == 0)
-                    <tr>
+                    <tr style="font-family: OpenSans-Regular; font-size: 15px; color: gray; line-height: 1.2; font-weight: unset; height: 50px; border-bottom: 1px solid #f5f5f5;">
                         <td colspan="1">Nenhum dado registrado</td>
                     </tr>
                     @endif
@@ -45,23 +39,5 @@
             </table>
         </div>
     </main>
-    <footer>
-
-    </footer>
-    <script src="{{ asset('js/fontawesome.min.js') }}"></script>
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
-    <script src="{{ asset('js/jquery.toast.min.js') }}"></script>
-    <script src="{{ asset('js/app.min.js') }}"></script>
-    @if (session('status'))
-    <script>
-        $.toast({
-            heading: '{{ session('header') }}',
-            text: '{{ session('message') }}',
-            icon: '{{ session('status') }}',
-            loader: true,        // Change it to false to disable loader
-        })
-    </script>
-    @endif
-    @yield('scripts')
 </body>
 </html>

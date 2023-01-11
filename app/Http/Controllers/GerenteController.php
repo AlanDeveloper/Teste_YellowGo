@@ -78,7 +78,7 @@ class GerenteController extends Controller
 
             $usuario = $usuario->where('tipo_de_usuario', $request->tipo_de_usuario);
         }
-        $usuario = $usuario->simplePaginate(25);
+        $usuario = $usuario->get();
         $data = array();
         for ($i=0; $i < count($usuario); $i++) {
             array_push($data, array(
@@ -110,14 +110,24 @@ class GerenteController extends Controller
 
     public function exportarPDF(Request $request)
     {
-        $usuario = Usuario::all();
-        return view('gerente.pdf', ['usuario' => $usuario]);
-        // retreive all records from db
-        // share data to view
-        view()->share('usuario', $usuario);
-        $pdf = PDF::loadView('gerente.teste', $usuario);
-        // download PDF file with download method
-        return $pdf->download('pdf_file.pdf');
+        $aux = "";
+        if ($request->data) {
+            $aux = (' AND DATE_FORMAT(atendimentos.created_at, "%Y-%m-%d") = "' . $request->data . '"');
+        }
+        $convertidos = DB::raw('(select count(*) from (select COUNT(*) from `atendimentos` where atendimentos.`status` != 0 and atendimentos.cliente_id IN (SELECT cliente_id FROM atendimentos WHERE atendimentos.status = 1 AND deleted_at IS NULL) and `atendimentos`.`deleted_at` is null and atendimentos.created_by' . $aux . ' group by cliente_id having COUNT(*) > 1) s) as convertidos');
+        $total = DB::raw('(select count(*) from (select COUNT(*) from `atendimentos` where atendimentos.`status` != 0 and `atendimentos`.`deleted_at` is null and atendimentos.created_by' . $aux . ' group by cliente_id having COUNT(*) > 1) s2) as total');
+        $usuario = Usuario::select('*', $convertidos, $total)->orderBy('nome', 'asc');
+
+        if ($request->responsavel_id) {
+            $usuario = $usuario->where('id', $request->responsavel_id);
+        }
+        if ($request->tipo_de_usuario) {
+            $usuario = $usuario->where('tipo_de_usuario', $request->tipo_de_usuario);
+        }
+
+        $data['usuario'] = $usuario->get();
+        $pdf = PDF::loadView('gerente.pdf', $data)->setPaper('a4', 'portrait');
+        return $pdf->stream();
     }
 
     public function conversoes_contratados(Request $request)

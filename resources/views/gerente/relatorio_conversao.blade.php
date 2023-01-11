@@ -1,5 +1,10 @@
 @extends('layout')
 
+@php
+    $url = URL::full();
+    $url = explode('?', $url)[1];
+@endphp
+
 @section('content')
 <form method="get">
     <div>
@@ -27,8 +32,8 @@
     </div>
     <input type="submit" value="Procurar">
 </form>
-<a href="{{ route('gerente.exportarCSV') }}">Exportar CSV</a>
-<a href="{{ route('gerente.exportarPDF') }}">Exportar PDF</a>
+<a href="{{ route('gerente.exportarCSV') . "?" . $url }}">Exportar CSV</a>
+<a href="{{ route('gerente.exportarPDF') . "?" . $url }}">Exportar PDF</a>
 <table>
     <thead>
         <tr>
