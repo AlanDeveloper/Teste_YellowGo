@@ -17,8 +17,6 @@ class DatabaseSeeder extends Seeder
             UsuarioSeeder::class,
             ComoSoubeSeeder::class,
             PlanoSeeder::class,
-            ClienteSeeder::class,
-            AtendimentoSeeder::class,
         ]);
     }
 }
