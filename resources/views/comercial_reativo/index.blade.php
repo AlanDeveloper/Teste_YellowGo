@@ -33,6 +33,9 @@
         </tr>
     </thead>
     <tbody>
+        @php
+            $nao_listado = true;
+        @endphp
         @foreach ($cliente as $c)
         @php
             $count = 0;
@@ -45,7 +48,6 @@
             }
 
             $status = number_format (($count - 5) / ($total - 5) * 100, 0);
-            $nao_listado = true;
         @endphp
         @if ($status >= 40)
         @php

@@ -13,7 +13,6 @@ class Atendimento extends Model
 
     protected $fillable = [
         'status',
-        'responsavel_id',
         'cliente_id',
     ];
 }

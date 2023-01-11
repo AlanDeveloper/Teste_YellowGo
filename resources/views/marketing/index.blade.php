@@ -60,7 +60,7 @@
             @endphp
             @endif
             @endforeach
-            @if ($nenhum_resultado)
+            @if (count($cliente) == 0 || $nenhum_resultado)
             <tr>
                 <td colspan="20">Nenhum dado registrado</td>
             </tr>

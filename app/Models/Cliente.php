@@ -33,6 +33,9 @@ class Cliente extends Model
         'status',
         'responsavel_id',
         'latitude',
-        'longitude'
+        'longitude',
+        'faturas',
+        'origem_de_informacao',
+        'plano_de_interesse'
     ];
 }

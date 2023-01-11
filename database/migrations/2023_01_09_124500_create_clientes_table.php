@@ -31,6 +31,10 @@ class CreateClientesTable extends Migration
             $table->integer('viabilidade')->nullable()->comment('0 - Rádio | 1 - Fibra | 2 - Inviável');
             $table->string('observacao', 1000)->nullable();
 
+            $table->string('plano_de_interesse', 255)->nullable();
+            $table->string('origem_da_informação', 255)->nullable();
+            $table->boolean('faturas')->nullable();
+
             $table->unsignedBigInteger('responsavel_id')->nullable();
             $table->integer('status')->comment('0 - Ocupado | 1 - Contratou | 2 - Não contratou | 3 - Interesse | 4 - Livre');
 
