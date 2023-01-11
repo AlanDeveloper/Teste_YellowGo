@@ -1,11 +1,15 @@
 @extends('layout')
 
-@php
-    $url = URL::full();
-    $url = explode('?', $url)[1];
-@endphp
 
 @section('content')
+@php
+    $url = URL::full();
+    if (strpos($url, "?")) {
+        $url = explode('?', $url)[1];
+    } else {
+        $url = "";
+    }
+@endphp
 <form method="get">
     <div>
         <label for="responsavel_id">Usuário</label>
@@ -78,7 +82,7 @@
                 data: {
                     labels: colaboradores.data.map(usuario => usuario.nome),
                     datasets: [{
-                        label: 'Clientes que contraram um plano',
+                        label: 'N° de contratos por funcionário',
                         data: colaboradores.data.map(usuario => usuario.contratados),
                         borderWidth: 1
                     }]
@@ -95,6 +99,7 @@
     });
 
     $.getJSON("/gerente/todas_conversoes" + url, function(colaboradores) {
+        console.log(colaboradores);
 
         if (colaboradores.sucesso) {
 
@@ -103,10 +108,10 @@
             new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: colaboradores.data.map(usuario => usuario.nome),
+                    labels: colaboradores.data.map(usuario => usuario.status == "0" ? "Ocupado" : (usuario.status == "1" ? "Contratou" : (usuario.status == "2" ? "Não contratou" : (usuario.status == "3" ? "Interesse" : "Livre")))),
                     datasets: [{
-                        label: 'Clientes que contraram um plano',
-                        data: colaboradores.data.map(usuario => usuario.atendimentos),
+                        label: 'Status dos clientes',
+                        data: colaboradores.data.map(usuario => usuario.total),
                         borderWidth: 1
                     }]
                 },

@@ -158,22 +158,25 @@ class GerenteController extends Controller
         try {
             $aux = "";
             if ($request->data) {
-                $aux = (' AND DATE_FORMAT(atendimentos.created_at, "%Y-%m-%d") = "' . $request->data . '"');
+                $aux = (' WHERE DATE_FORMAT(atendimentos.created_at, "%Y-%m-%d") = "' . $request->data . '"');
             }
-            $atendimentos = DB::raw('(SELECT COUNT(*) FROM atendimentos WHERE deleted_at IS NULL AND atendimentos.created_by = usuarios.id' . $aux . ') AS atendimentos');
-            $usuario = Usuario::select('*', $atendimentos)->orderBy('nome', 'asc');
+            $atendimento = Atendimento::join('usuarios', 'usuarios.id', '=', 'atendimentos.created_by')->select('atendimentos.status', DB::raw('COUNT(*) AS total'))->join(DB::raw('(SELECT cliente_id, max(created_at) AS created_at FROM atendimentos ' . $aux . ' GROUP BY cliente_id) p2'), function ($join) {
+                $join->on('p2.cliente_id', '=', 'atendimentos.cliente_id');
+                $join->on('p2.created_at', '=', 'atendimentos.created_at');
+            })->groupBy('atendimentos.status');
 
             if ($request->responsavel_id) {
-                $usuario = $usuario->where('id', $request->responsavel_id);
+                $atendimento = $atendimento->where('id', $request->created_by);
             }
             if ($request->tipo_de_usuario) {
-                $usuario = $usuario->where('tipo_de_usuario', $request->tipo_de_usuario);
+                $atendimento = $atendimento->where('tipo_de_usuario', $request->tipo_de_usuario);
             }
-            $usuario = $usuario->get();
+            $atendimento = $atendimento->get();
+
         } catch (\Exception $e) {
             return response()->json(array('sucesso' => false, 'error' => $e->getMessage()));
         }
-        return response()->json(array('sucesso' => true, 'data' => $usuario));
+        return response()->json(array('sucesso' => true, 'data' => $atendimento));
     }
 
     public function gerenciar_funcionario()
