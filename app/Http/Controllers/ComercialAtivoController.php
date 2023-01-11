@@ -6,6 +6,7 @@ use App\Models\Atendimento;
 use App\Models\Cliente;
 use App\Models\ComoSoube;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class ComercialAtivoController extends Controller
 {
@@ -41,8 +42,18 @@ class ComercialAtivoController extends Controller
                 $data['status'] = '0';
                 $data['responsavel_id'] = auth()->user()->id;
                 $cliente = Cliente::create($data);
+
+                $http = Http::withHeaders([
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json',
+                ]);
+                $response = $http->post(env('API_URL') . '/cadastrar_lead?api_token=' . env('API_TOKEN'), $request->all())->collect()->toArray();
+                if (isset($response['erro'])) {
+                    throw new \Exception("Houve um problema ao conectar a api!");
+                }
             }
         } catch (\Exception $e) {
+            Cliente::where('id', $cliente->id)->delete();
             return redirect()->back()
                 ->with('header', 'Error')
                 ->with('message', 'Falha ao ' . ($method == 'POST' ? 'criar' : 'atualizar') . ' com mensagem"' . $e->getMessage() . '"')
@@ -98,7 +109,7 @@ class ComercialAtivoController extends Controller
         }
         return redirect()->route('comercial_ativo.index')
             ->with('header', 'Success')
-            ->with('message', 'Sucesso ao deletar')
+            ->with('message', 'Sucesso ao atualizar')
             ->with('status', 'success');
     }
 }

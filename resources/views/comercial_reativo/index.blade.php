@@ -66,7 +66,7 @@
         @endforeach
         @if (count($cliente) == 0 || $nao_listado)
         <tr>
-            <td colspan="1">Nenhum dado registrado</td>
+            <td colspan="20">Nenhum dado registrado</td>
         </tr>
         @endif
     </tbody>

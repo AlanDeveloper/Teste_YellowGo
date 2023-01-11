@@ -32,7 +32,7 @@
                     @endforeach
                     @if (count($usuario) == 0)
                     <tr style="font-family: OpenSans-Regular; font-size: 15px; color: gray; line-height: 1.2; font-weight: unset; height: 50px; border-bottom: 1px solid #f5f5f5;">
-                        <td colspan="1">Nenhum dado registrado</td>
+                        <td colspan="20">Nenhum dado registrado</td>
                     </tr>
                     @endif
                 </tbody>
