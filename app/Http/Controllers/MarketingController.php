@@ -30,7 +30,7 @@ class MarketingController extends Controller
         if ($request->data) {
             $cliente = $cliente->whereRaw('DATE_FORMAT(created_at, "%Y-%m-%d") = "' . $request->data . '"');
         }
-        $cliente = $cliente->simplePaginate(15);
+        $cliente = $cliente->simplePaginate(25);
         return view('marketing.index', ['cliente' => $cliente]);
     }
 

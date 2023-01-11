@@ -20,6 +20,7 @@
                 <thead style="height: 60px; background: #1B1717; color: #fff;">
                     <tr>
                         <th>Nome</th>
+                        <th>Tipo de função</th>
                         <th>Total de conversões</th>
                     </tr>
                 </thead>
@@ -27,6 +28,7 @@
                     @foreach ($usuario as $u)
                     <tr style="font-family: OpenSans-Regular; font-size: 15px; color: gray; line-height: 1.2; font-weight: unset; height: 50px; border-bottom: 1px solid #f5f5f5;">
                         <td>{{ $u->nome }}</td>
+                        <td>{{ $u->tipo_de_usuario == "0" ? 'Gerente' : ($u->tipo_de_usuario == "1" ? 'Comercial Ativo' : ($u->tipo_de_usuario == "2" ? 'Comercial Passivo' : ($u->tipo_de_usuario == "3" ? 'Comercial Reativo' : ($u->tipo_de_usuario == "4" ? 'Comercial PAP' : 'Marketing')))) }}</td>
                         <td>{{ number_format($u->contratados / ($u->total == 0 ? 1 : $u->total) * 100, 0) }}%</td>
                     </tr>
                     @endforeach

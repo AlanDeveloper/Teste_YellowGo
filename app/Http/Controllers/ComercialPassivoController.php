@@ -36,7 +36,7 @@ class ComercialPassivoController extends Controller
                 ->withInput();
         }
         $responsavel = DB::raw('(SELECT nome FROM usuarios WHERE usuarios.id = clientes.responsavel_id) AS responsavel');
-        $cliente = Cliente::select('*', $responsavel)->simplePaginate(15);
+        $cliente = Cliente::select('*', $responsavel)->simplePaginate(25);
         $c = Cliente::where('responsavel_id', auth()->user()->id)->first();
         return view('comercial_passivo.index', ['cliente' => $cliente, 'c' => $c]);
     }
@@ -88,7 +88,7 @@ class ComercialPassivoController extends Controller
         }
         return redirect()->back()
             ->with('header', 'Success')
-            ->with('message', 'Sucesso ao deletar')
+            ->with('message', 'Sucesso ao atualizar')
             ->with('status', 'success');
     }
 }

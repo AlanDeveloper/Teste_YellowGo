@@ -166,7 +166,7 @@ class GerenteController extends Controller
             })->groupBy('atendimentos.status');
 
             if ($request->responsavel_id) {
-                $atendimento = $atendimento->where('id', $request->created_by);
+                $atendimento = $atendimento->where('atendimentos.created_by', $request->responsavel_id);
             }
             if ($request->tipo_de_usuario) {
                 $atendimento = $atendimento->where('tipo_de_usuario', $request->tipo_de_usuario);
@@ -212,7 +212,7 @@ class GerenteController extends Controller
             ->with('status', 'success');
     }
 
-    public function deleta_usuario($id)
+    public function deleta_funcionario($id)
     {
         try {
             Usuario::where('id', $id)->delete();

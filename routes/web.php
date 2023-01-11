@@ -103,7 +103,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/gerente/{id}/atualiza_funcionario', [GerenteController::class, 'atualiza_funcionario'])->name('gerente.atualiza_funcionario');
     Route::put('/gerente/{id}/atualiza_funcionario', [GerenteController::class, 'atualiza_funcionario_2'])->name('gerente.atualiza_funcionario_2');
 
-    Route::delete('/gerente/{id}', [GerenteController::class, 'delete_funcionario'])->name('gerente.delete_funcionario');
+    Route::delete('/gerente/{id}', [GerenteController::class, 'deleta_funcionario'])->name('gerente.deleta_funcionario');
 
     # MÓDULO DE PLANOS
     Route::get('/plano', [PlanoController::class, 'index'])->name('plano.index');

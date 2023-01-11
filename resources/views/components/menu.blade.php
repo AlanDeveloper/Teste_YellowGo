@@ -65,7 +65,7 @@
                 <ul class="dropdown">
                     <li>
                         <a href="{{ route('comercial_reativo.index') }}" @if (URL::full() == route('comercial_reativo.index')) class="active" @endif>
-                            <span style="padding-left: 20px;">Leads</span>
+                            <span style="padding-left: 20px;">Lista de Leads</span>
                         </a>
                     </li>
                 </ul>
@@ -110,7 +110,7 @@
                 <ul class="dropdown">
                     <li>
                         <a href="{{ route('marketing.index') }}" @if (URL::full() == route('marketing.index')) class="active" @endif>
-                            <span style="padding-left: 20px;">Leads</span>
+                            <span style="padding-left: 20px;">Relatório</span>
                         </a>
                     </li>
                 </ul>

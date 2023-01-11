@@ -12,7 +12,7 @@ class ComercialReativoController extends Controller
     public function index()
     {
         $responsavel = DB::raw('(SELECT nome FROM usuarios WHERE usuarios.id = clientes.responsavel_id) AS responsavel');
-        $cliente = Cliente::select('*', $responsavel)->where('status', '3')->simplePaginate(15);
+        $cliente = Cliente::select('*', $responsavel)->where('status', '3')->simplePaginate(25);
         $c = Cliente::where('responsavel_id', auth()->user()->id)->first();
         return view('comercial_reativo.index', ['cliente' => $cliente, 'c' => $c]);
     }
@@ -68,7 +68,7 @@ class ComercialReativoController extends Controller
         }
         return redirect()->back()
             ->with('header', 'Success')
-            ->with('message', 'Sucesso ao deletar')
+            ->with('message', 'Sucesso ao atualizar')
             ->with('status', 'success');
     }
 }
