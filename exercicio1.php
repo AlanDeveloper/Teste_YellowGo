@@ -20,23 +20,32 @@ function separarDoisVerticesVerticaisEHorizontais($quadrado) {
     $vertices_verticais = array();
 
     if ($quadrado[0][0] == $quadrado[1][0]) {
+
         $vertices_verticais[] = $quadrado[0];
         $vertices_verticais[] = $quadrado[1];
-
-        $vertices_horizontais[] = $quadrado[0];
-        $vertices_horizontais[] = $quadrado[3];
     } else if ($quadrado[0][0] == $quadrado[2][0]) {
+
         $vertices_verticais[] = $quadrado[0];
         $vertices_verticais[] = $quadrado[2];
-
-        $vertices_horizontais[] = $quadrado[0];
-        $vertices_horizontais[] = $quadrado[3];
     } else {
+
         $vertices_verticais[] = $quadrado[0];
         $vertices_verticais[] = $quadrado[4];
+    }
+
+    if ($quadrado[0][1] == $quadrado[1][1]) {
+
+        $vertices_horizontais[] = $quadrado[0];
+        $vertices_horizontais[] = $quadrado[1];
+
+    } else if ($quadrado[0][1] == $quadrado[2][1]) {
 
         $vertices_horizontais[] = $quadrado[0];
         $vertices_horizontais[] = $quadrado[2];
+    } else {
+
+        $vertices_horizontais[] = $quadrado[0];
+        $vertices_horizontais[] = $quadrado[3];
     }
 
     return array('vertices_horizontais' => $vertices_horizontais, 'vertices_verticais' => $vertices_verticais);
@@ -65,7 +74,12 @@ function meuCount($array) {
 function verificaSobreposicao($quadrado, $vertices) {
     $esta_dentro = array();
 
+
     foreach ($quadrado as $sq) {
+        print_r($vertices['vertices_horizontais']);
+        print_r($vertices['vertices_verticais']);
+        print_r($sq);
+
         if (($vertices['vertices_horizontais'][0][0] <= $sq[0] && $vertices['vertices_horizontais'][1][0] >= $sq[0]) || ($vertices['vertices_horizontais'][1][0] <= $sq[0] && $vertices['vertices_horizontais'][0][0] >= $sq[0])) {
             if (($vertices['vertices_verticais'][0][1] <= $sq[1] && $vertices['vertices_verticais'][1][1] >= $sq[1]) || ($vertices['vertices_verticais'][1][1] <= $sq[1] && $vertices['vertices_verticais'][0][1] >= $sq[1])) {
                 $esta_dentro[] = $sq;
@@ -85,7 +99,7 @@ $vertices_dentro = verificaSobreposicao($segundo_quadrado_area > $primeiro_quadr
 
 $c = meuCount($vertices_dentro);
 if ($c == 0) {
-    echo "Um quadrado não sobrepõe o outro!";
+    echo "Um quadrado não sobrepõe o outro!\n";
     echo "Área do primeiro quadrado: " . $primeiro_quadrado_area . "\n";
     echo "Área do segundo quadrado: " . $segundo_quadrado_area . "\n";
     echo "Área total: 0";
